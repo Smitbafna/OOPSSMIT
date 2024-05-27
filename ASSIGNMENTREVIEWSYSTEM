@@ -635,3 +635,11 @@ case 3:
 
     }
 }
+
+
+int main()
+{
+
+    page_start();
+
+}
