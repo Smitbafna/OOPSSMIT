@@ -23,15 +23,16 @@ class IMG_Member
 private:
 
 protected:
-    string Email_id;
-    string Whatsapp_No;
-    string DOB;
-    
+   
 
 public:
   string Name;
     string Enrollment_no;
     string Last_login;
+     string Email_id;
+    string Whatsapp_No;
+    string DOB;
+    
     
 };
 
@@ -101,7 +102,7 @@ Assignment A;
 class Student : public IMG_Member
 {
    protected:
-    int Pin_key;
+   
     vector<Assignment> assignment_studentside;
   
     
@@ -109,6 +110,7 @@ class Student : public IMG_Member
     Student(){};
 Student( string Name, string Enrollment_no, string Email_id, int Pin_key){}
  int Verify_pin_key() { return Pin_key; };
+  int Pin_key;
  
 
  void display_Personalinfo(){
@@ -175,7 +177,7 @@ string  get_assignment_addedon(string d){
 class Reviewer : public IMG_Member
 {
    protected:
-    int Pin_key;
+   
   vector<tuple<string ,string ,string>> Req_iteration;
   
     
@@ -183,7 +185,7 @@ class Reviewer : public IMG_Member
     Reviewer(){};
 Reviewer( string Name, string Enrollment_no, string Email_id, int Pin_key){}
  int Verify_pin_key() { return Pin_key; };
- 
+  int Pin_key;
  void registration(){
          
          
@@ -578,24 +580,46 @@ else{
 
 case 2:
 {
-string Name;
-         string Enrollment_no ;
-          string Email_id;
-          string Whatsapp_No;
-          string DOB;
-          int Pin_key;
+string name;
+         string enrollment_no ;
+          string email_id;
+          string whatsapp_No;
+          string dOB;
+          int pin_key;
          cout << "Name: ";
-        cin >> Name;
+        cin >> name;
         cout << "Enrollment Number: ";
-        cin >> Enrollment_no ;
+        cin >> enrollment_no ;
         cout << "Enter Pin(must be 4 digit): ";
-        cin >> Pin_key;
+        cin >> pin_key;
           cout << "Email Address: ";
-        cin >> Email_id;
+        cin >> email_id;
         cout<<"Whatsapp Number";
-        cin>>Whatsapp_No;
+        cin>>whatsapp_No;
         cout<<"DOB in MMDDYY";
-        cin>>DOB;
+        cin>>dOB;
+        
+        cout<<"Who would you like to add as 1 for reviewer,2 for student";
+        
+        int key1;
+        cin>>key1;
+        if(key1==1){
+            reviewer_details[enrollment_no].Name =name;
+             reviewer_details[enrollment_no].Pin_key=pin_key;
+              reviewer_details[enrollment_no].Email_id=email_id;
+               reviewer_details[enrollment_no].Whatsapp_No=whatsapp_No;
+                reviewer_details[enrollment_no].DOB=dOB;
+            
+        }
+        else{
+           
+            Student_Details_map[enrollment_no].Name =name;
+             Student_Details_map[enrollment_no].Pin_key=pin_key;
+             Student_Details_map[enrollment_no].Email_id=email_id;
+               Student_Details_map[enrollment_no].Whatsapp_No=whatsapp_No;
+                Student_Details_map[enrollment_no].DOB=dOB;
+    
+        }
 } 
 break;
 
@@ -610,32 +634,4 @@ case 3:
 
 
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-int main()
-{
-    
-    page_start();
-   
 }
