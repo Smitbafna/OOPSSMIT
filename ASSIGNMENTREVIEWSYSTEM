@@ -1,645 +1,400 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include <iostream>
-#include <string>
-#include <stdio.h>
-#include <time.h>
 
 // Get current date/time, format is YYYY-MM-DD.HH:mm:ss
 const std::string currentDateTime() {
-    time_t     now = time(0);
-    struct tm  tstruct;
-    char       buf[80];
+    time_t now = time(0);
+    struct tm tstruct;
+    char buf[80];
     tstruct = *localtime(&now);
-    // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
-    // for more information about date/time format
     strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
 
     return buf;
 }
 
-class IMG_Member
-{
-private:
-
+class IMG_Member {
 protected:
-   
-
-public:
-  string Name;
+    string Name;
     string Enrollment_no;
     string Last_login;
-     string Email_id;
+    string Email_id;
     string Whatsapp_No;
     string DOB;
-    
-    
+
+public:
+    string get_Name() { return Name; }
+    string get_DOB() { return DOB; }
+    string get_current_login() { return Last_login; }
+
+    void set_Last_login(const string& lastLogin) { Last_login = lastLogin; }
+    void set_Whatsapp_No(const string& whatsappNo) { Whatsapp_No = whatsappNo; }
+    void set_DOB(const string& dob) { DOB = dob; }
 };
 
-
-
-class Assignment{
-    public:
-      
+class Assignment {
+private:
     string Assignment_title;
     string Assignment_probstatement;
     string Assignment_status;
     string Assignment_suggestion;
-     string Assignment_Deadline;
-     string Assignment_submission_time;
-    Assignment(){};
-    Assignment(string Assignment_title, string Assignment_probstatement, string Assignment_status = "Pending", string Assignment_suggestion = "")
-    {
-        this->Assignment_title = Assignment_title;
-        this->Assignment_probstatement = Assignment_probstatement;
-        this->Assignment_status = Assignment_status;
-        this->Assignment_suggestion = Assignment_suggestion;
-        this->Assignment_Deadline = Assignment_Deadline;
-        this->Assignment_submission_time=Assignment_submission_time;
-        
-    }
-     string get_Assignment_status() { return Assignment_status; }
-    string get_Assignment_suggestion(){return Assignment_suggestion;}
+    string Assignment_Deadline;
+    string Assignment_submission_time;
+
+public:
+    Assignment() {}
+    Assignment(string title, string probstatement, string status = "Pending", string suggestion = "", string deadline = "")
+        : Assignment_title(title), Assignment_probstatement(probstatement), Assignment_status(status), Assignment_suggestion(suggestion), Assignment_Deadline(deadline) {}
+
+    string get_Assignment_status() { return Assignment_status; }
+    string get_Assignment_suggestion() { return Assignment_suggestion; }
     string get_Assignment_title() { return Assignment_title; }
-    string get_Assignment_probstatement(){return Assignment_probstatement;}
-     string get_Assignment_submission_time(){return Assignment_submission_time;}
+    string get_Assignment_probstatement() { return Assignment_probstatement; }
+    string get_Assignment_submission_time() { return Assignment_submission_time; }
 
-     void Assignment_Deadlinecheck(){
-        cout<<"Enter Assignment deadline";
-        cin>>Assignment_Deadline;
-     }
-
-
-     void Update_Assignment_status_suggestion(string s1, string s2)
-    {
-    Assignment_status = s1;
-        Assignment_suggestion= s2;
+    void Update_Assignment_status_suggestion(string status, string suggestion) {
+        Assignment_status = status;
+        Assignment_suggestion = suggestion;
     }
 
-  vector<string> Assignment_details()
-    {
-        vector<string> v = {Assignment_title, Assignment_probstatement, Assignment_status,Assignment_suggestion,Assignment_Deadline,Assignment_submission_time};
-        return v;
+    vector<string> Assignment_details() {
+        return {Assignment_title, Assignment_probstatement, Assignment_status, Assignment_suggestion, Assignment_Deadline, Assignment_submission_time};
     }
 
-void get_Assignment_title_status()
-    {
-        cout << "Assignment Title: " <<Assignment_title << endl;
+    void get_Assignment_title_status() {
+        cout << "Assignment Title: " << Assignment_title << endl;
         cout << "Assignment Status: " << Assignment_status << endl;
-        
     }
-void get_Assignment_title_probstatement(){
-    cout << "Assignment Title: " <<Assignment_title << endl;
-        cout << "Assignment Problem statement: " << Assignment_probstatement << endl;
-        cout<<"Assignment Deadline"<<Assignment_Deadline<<endl;
-}
 
+    void get_Assignment_title_probstatement() {
+        cout << "Assignment Title: " << Assignment_title << endl;
+        cout << "Assignment Problem statement: " << Assignment_probstatement << endl;
+        cout << "Assignment Deadline: " << Assignment_Deadline << endl;
+    }
 };
 
-vector<Assignment>assignment_mainside;
-Assignment A;
+vector<Assignment> assignment_mainside;
 
-class Student : public IMG_Member
-{
-   protected:
-   
+class Student : public IMG_Member {
+private:
     vector<Assignment> assignment_studentside;
-  
-    
-    public:
-    Student(){};
-Student( string Name, string Enrollment_no, string Email_id, int Pin_key){}
- int Verify_pin_key() { return Pin_key; };
-  int Pin_key;
- 
+    int Pin_key;
 
- void display_Personalinfo(){
-     cout << "Name: " << Name << endl;
+public:
+    Student() {}
+    Student(string name, string enrollment_no, string email_id, int pin_key) {
+        Name = name;
+        Enrollment_no = enrollment_no;
+        Email_id = email_id;
+        Pin_key = pin_key;
+    }
+
+    int Verify_pin_key() { return Pin_key; }
+
+    void display_Personalinfo() {
+        cout << "Name: " << Name << endl;
         cout << "Enrollment No.: " << Enrollment_no << endl;
         cout << "Email Address: " << Email_id << endl;
-       cout<<"Whatsapp Number :"<<Whatsapp_No<<endl;
-       cout<<"DOB"<<DOB<<endl;
-       cout<<"Last Login:"<<Last_login<<endl;
- }
-
- 
-
-
- /*void display_AssignmentDetails(){
-    cout << "Total assignments: " << assignment_studentside.size() << endl;
-
-        for (auto it = assignment_studentside.begin(); it != assignment_studentside.end(); ++it) {
-        cout << *it << " ";
+        cout << "Whatsapp Number: " << Whatsapp_No << endl;
+        cout << "DOB: " << DOB << endl;
+        cout << "Last Login: " << Last_login << endl;
     }
-     for (int i = 0; i <assignment_studentside.size(); ++i) {
-        cout << assignment_studentside[i] << " ";
-    }
-        
-    }
-*/
- vector<string> get_PersonalInfo()
-    {
-        vector<string> PI = {Name, Enrollment_no, Email_id,Whatsapp_No,Last_login,DOB};
-        return PI;
-    };
- vector<string> PI = {Name, Enrollment_no, Email_id,Whatsapp_No,Last_login,DOB};
 
- string get_Name(){
-    return PI[0];
- }
-string get_DOB(){
-    return PI[5];
- }
+    vector<string> get_PersonalInfo() {
+        return {Name, Enrollment_no, Email_id, Whatsapp_No, Last_login, DOB};
+    }
+
     vector<Assignment> get_assignments() { return assignment_studentside; }
 
-
-string get_current_login(){
-    return Last_login;
-}
-
-
-
-void ADD_Assignemnt(string a, string b,string c,string d)
-    {
-        Assignment assig(a, b,c,d);
+    void ADD_Assignemnt(string title, string content, string deadline, string addedon) {
+        Assignment assig(title, content, "Pending", "", deadline);
         assignment_studentside.push_back(assig);
-      string  get_assignment_deadline(c);
     }
-string  get_assignment_deadline(string c){
-    return c;
-}
-string  get_assignment_addedon(string d){
-    return d;
-}
 };
 
+class Reviewer : public IMG_Member {
+private:
+    vector<tuple<string, string, string>> Req_iteration;
+    int Pin_key;
 
-class Reviewer : public IMG_Member
-{
-   protected:
-   
-  vector<tuple<string ,string ,string>> Req_iteration;
-  
-    
-    public:
-    Reviewer(){};
-Reviewer( string Name, string Enrollment_no, string Email_id, int Pin_key){}
- int Verify_pin_key() { return Pin_key; };
-  int Pin_key;
- void registration(){
-         
-         
- } 
+public:
+    Reviewer() {}
+    Reviewer(string name, string enrollment_no, string email_id, int pin_key) {
+        Name = name;
+        Enrollment_no = enrollment_no;
+        Email_id = email_id;
+        Pin_key = pin_key;
+    }
 
-void display_Personalinfo(){
-     cout << "Name: " << Name << endl;
+    int Verify_pin_key() { return Pin_key; }
+
+    void display_Personalinfo() {
+        cout << "Name: " << Name << endl;
         cout << "Enrollment No.: " << Enrollment_no << endl;
         cout << "Email Address: " << Email_id << endl;
-       cout<<"Whatsapp Number :"<<Whatsapp_No<<endl;
-       cout<<"DOB"<<DOB<<endl;
-       cout<<"Last Login:"<<Last_login<<endl;
- }
-
-void Add_assignment_iteration(string n, string s,string p)
-    {
-       Req_iteration.push_back({n,s,p});
+        cout << "Whatsapp Number: " << Whatsapp_No << endl;
+        cout << "DOB: " << DOB << endl;
+        cout << "Last Login: " << Last_login << endl;
     }
 
-string get_current_login(){
-    return Last_login;
-}
-
-
- vector<string> PI = {Name, Enrollment_no, Email_id,Whatsapp_No,Last_login,DOB};
-
- string get_Name(){
-    return PI[0];
- }
-string get_DOB(){
-    return PI[5];
- }
-
+    void Add_assignment_iteration(string n, string s, string p) {
+        Req_iteration.push_back({n, s, p});
+    }
 };
 
-
-
-Student s;
 map<string, Student> Student_Details_map;
-map<string, Assignment> Assignment_map;
 map<string, Reviewer> reviewer_details;
 
-
-void page_start(){
-    while(true){
-         cout << "..........................................................\n";
+void page_start() {
+    while (true) {
+        cout << "..........................................................\n";
         cout << "Hey there! Welcome to IMG Assignment Review system!!!\n\n";
         cout << "How do we know you?\n\n";
         cout << "1. Existing IMG Member\n";
-        cout << "2. New IMG Member?Well we need to add you first!!\n";
+        cout << "2. New IMG Member? Well, we need to add you first!!\n";
         cout << "3. Exit\n\n";
         cout << "(Enter the suitable key 1/2/3)\n";
         cout << "..........................................................\n";
 
-int key;
-cout<<"enter";
-cin>>key;
-switch(key){
+        int key;
+        cout << "enter: ";
+        cin >> key;
+        switch (key) {
+            case 1: {
+                while (true) {
+                    cout << "..........................................................\n";
+                    cout << "Who do you want to login as?\n\n";
+                    cout << "1. IMG Student \n";
+                    cout << "2. IMG Reviewer \n";
+                    cout << "3. Previous stage \n";
+                    cout << "4. Exit\n";
+                    cout << "Current login at: \n" << currentDateTime();
+                    cout << "..........................................................\n";
 
-case 1:
-{
-    cout << "..........................................................\n";
-    cout <<"Who do you want to login as?\n\n";
-    cout << "1. IMG Student \n";
-    cout << "2. IMG Reviewer \n";
-    cout << "3. Previous stage \n";
-    cout << "4. Exit\n";
-     cout<< "Current login at: \n" << currentDateTime();
-   cout << "..........................................................\n";
-   
-   int key1;
-   cout<<"enter";
-   cin>>key1;
+                    int key1;
+                    cout << "enter: ";
+                    cin >> key1;
 
-   switch(key1)
-   {
-    case 1:
- 
-{   
-    string Enrollment_No;
-    string Pin_key;
-    
-    AUTHENTICATION:
-    int Pin_input;
-    string Enrollment_no_input;
-    cout<<"Enrollment Number"<<endl;
-    cin>>Enrollment_no_input;
-    cout<<"Enter Pin";
-    cin>>Pin_input;
-   if (Student_Details_map.find(Enrollment_No) != Student_Details_map.end() && Student_Details_map[Enrollment_No].Verify_pin_key() == Pin_input){
+                    if (key1 == 3) {
+                        break; // Go back to the previous stage
+                    } else if (key1 == 4) {
+                        exit(0);
+                    }
 
- Student_Details_map[Enrollment_No].get_current_login()= currentDateTime();
-    cout << "..........................................................\n";
-                                          cout<<"Welcome   "<<Student_Details_map[Enrollment_No].get_Name() << endl << endl;
-                                           cout << "What would you like to do?\n\n";
-                                           cout << "1. Personal Details\n";
-                                           cout << "2.List of Assignments and their statuses\n";
-                                           cout<<"3.Assignments and their Details";
-                                            cout<<"4.View all last logins\n";
-                                           cout << "5. Submit assignment for iteration\n";
-                                             cout << "6. Exit" << endl;
-                                           cout << "..........................................................\n";
+                    string Enrollment_no_input;
+                    int Pin_input;
 
-                                             int response3;
-                                           cout << "Enter: ";
-                                           cin >>response3;
-                                       vector<Assignment> v;
-                                                v = Student_Details_map[Enrollment_No].get_assignments();
-                                         RESPONSE3:
-                                           switch (response3)
-                                            {
-                                                
-                                               case 1:
-                                                   cout << "..........................................................\n";
-                                                Student_Details_map[Enrollment_No].display_Personalinfo();
-                                                   goto RESPONSE3;
-                                       
-                                                case 2:
-                                                
-                                                for (auto it : v)
-                                                {
+                    if (key1 == 1) {
+                        cout << "Enrollment Number: ";
+                        cin >> Enrollment_no_input;
+                        cout << "Enter Pin: ";
+                        cin >> Pin_input;
 
-                                                 cout << "..........................................................\n";
-                                                 Assignment_map[Enrollment_No].get_Assignment_title_status();
-                                                 cout << "..........................................................\n";
-                                                }
-                                                 goto RESPONSE3;
+                        if (Student_Details_map.find(Enrollment_no_input) != Student_Details_map.end() &&
+                            Student_Details_map[Enrollment_no_input].Verify_pin_key() == Pin_input) {
 
-                                                 case 3:
-                                                
-                                                for (auto it : v)
-                                                {
+                            Student_Details_map[Enrollment_no_input].set_Last_login(currentDateTime());
+                            while (true) {
+                                cout << "..........................................................\n";
+                                cout << "Welcome " << Student_Details_map[Enrollment_no_input].get_Name() << endl << endl;
+                                cout << "What would you like to do?\n\n";
+                                cout << "1. Personal Details\n";
+                                cout << "2. List of Assignments and their statuses\n";
+                                cout << "3. Assignments and their Details\n";
+                                cout << "4. View all last logins\n";
+                                cout << "5. Submit assignment for iteration\n";
+                                cout << "6. Exit\n";
+                                cout << "..........................................................\n";
 
-                                                 cout << "..........................................................\n";
-                                                 Assignment_map[Enrollment_No].get_Assignment_title_probstatement();
-                                                 cout << "..........................................................\n";
-                                                }
-                                                 goto RESPONSE3;
+                                int response3;
+                                cout << "Enter: ";
+                                cin >> response3;
 
-                                                 case 4:
-                                                    goto RESPONSE3;
-                                                 case 5:
-                                                     if (Student_Details_map[Enrollment_No].get_assignments().size() != 0)
-                            {
-                                string Reviewer_name_input,Assignment_name_input,Reviewer_enrollment_no_input;
-                                string Assignment_submission_time;
-                               cout << "..........................................................\n";
-                                cout << "Enter the reviewer name:";
-                                cin>>Reviewer_name_input;
+                                vector<Assignment> v = Student_Details_map[Enrollment_no_input].get_assignments();
 
-                                cout << "Enter the reviewer enrollment number: ";
-                                cin >> Reviewer_enrollment_no_input;
-
-                                cout << "Enter the assignment Title: ";
-                                cin>>Assignment_name_input;
-                               
-                                unordered_set<string> sett;
-                                for (auto OP : Student_Details_map[Enrollment_No].get_assignments())
-                                {
-                                    sett.insert(OP.get_Assignment_title());
-                                }
-                                if (reviewer_details.find(Reviewer_enrollment_no_input) != reviewer_details.end() && sett.find(Assignment_name_input) != sett.end())
-                                {   Assignment_submission_time = currentDateTime();
-                                    Reviewer rev = reviewer_details[Reviewer_enrollment_no_input];
-                                    rev.Add_assignment_iteration(Enrollment_No, Assignment_name_input,Assignment_submission_time);
-                                    reviewer_details[Enrollment_no_input] = rev;
-                                    cout << endl;
-                                    cout << "Assignment Submitted for iteration successfully!!" << endl;
-                                    
-                                    cout<<"assignment submitted on: \n"<<Assignment_submission_time;
-                                }
-                                else
-                                {
-                                    cout << endl;
-                                    cout << "Incorrect Details provided\n";
+                                if (response3 == 1) {
+                                    cout << "..........................................................\n";
+                                    Student_Details_map[Enrollment_no_input].display_Personalinfo();
+                                } else if (response3 == 2) {
+                                    for (auto& it : v) {
+                                        cout << "..........................................................\n";
+                                        it.get_Assignment_title_status();
+                                        cout << "..........................................................\n";
+                                    }
+                                } else if (response3 == 3) {
+                                    for (auto& it : v) {
+                                        cout << "..........................................................\n";
+                                        it.get_Assignment_title_probstatement();
+                                        cout << "..........................................................\n";
+                                    }
+                                } else if (response3 == 4) {
+                                    // Implement the view all last logins functionality
+                                } else if (response3 == 5) {
+                                    string a, b, c, d;
+                                    cout << "Assignment title: ";
+                                    cin.ignore();
+                                    getline(cin, a);
+                                    cout << "Problem statement: ";
+                                    getline(cin, b);
+                                    cout << "Submission time: ";
+                                    getline(cin, c);
+                                    cout << "Deadline: ";
+                                    getline(cin, d);
+                                    Student_Details_map[Enrollment_no_input].ADD_Assignemnt(a, b, c, d);
+                                } else if (response3 == 6) {
+                                    break;
+                                } else {
+                                    cout << "Invalid option. Please try again.\n";
                                 }
                             }
+                        } else {
+                            cout << "Invalid Credentials\n";
+                        }
+                    } else if (key1 == 2) {
+                        cout << "Enrollment Number: ";
+                        cin >> Enrollment_no_input;
+                        cout << "Enter Pin: ";
+                        cin >> Pin_input;
 
+                        if (reviewer_details.find(Enrollment_no_input) != reviewer_details.end() &&
+                            reviewer_details[Enrollment_no_input].Verify_pin_key() == Pin_input) {
 
+                            reviewer_details[Enrollment_no_input].set_Last_login(currentDateTime());
+                            while (true) {
+                                cout << "..........................................................\n";
+                                cout << "Welcome " << reviewer_details[Enrollment_no_input].get_Name() << endl << endl;
+                                cout << "What would you like to do?\n\n";
+                                cout << "1. Personal Details\n";
+                                cout << "2. Last logins\n";
+                                cout << "3. List of Assignments and their statuses\n";
+                                cout << "4. Add Assignment\n";
+                                cout << "5. Previous Stage\n";
+                                cout << "6. Exit\n";
+                                cout << "..........................................................\n";
 
-                                case 6:
-                                   
-                                   break;
-                                   
+                                int response4;
+                                cout << "Enter: ";
+                                cin >> response4;
 
-
-                                            }                                      
-}
-else{
-        cout<<"incorrect pin ";
-        cout<<"1.Back to authentication\n";
-        cout<<"2.Forgot pin";
-        
-          int response4;                                   
-          cout << "Enter: ";
-         cin >>response4;
-     RESPONSE4:
-        switch (response4)
-         {
-          case 1:
-           goto AUTHENTICATION;
-
-           case 2:
-           
-      string DOB_input;
-      ENTERDOB:
-     cout<<"enter DOB";
-      cin>>DOB_input;
-      if(DOB_input== Student_Details_map[Enrollment_No].get_DOB()){
-       cout<<"Your pin was"<<Pin_key;
-          }
-       else{
-        cout<<"Enter correct DOB";
-        goto ENTERDOB;
-         }
-    
-        
- 
-          }
-     
-        
-    }
-
-
-                                                      
-
-}
-    case 2:
-      {
- string Enrollment_No;
-    string Pin_key;
-    
-    AUTHENTICATIONFORREVIEWER:
-    int Pin_input;
-    string Enrollment_no_input;
-    cout<<"Enrollment Number"<<endl;
-    cin>>Enrollment_no_input;
-    cout<<"Enter Pin";
-    cin>>Pin_input;
-   if (reviewer_details.find(Enrollment_No) != reviewer_details.end() && reviewer_details[Enrollment_No].Verify_pin_key() == Pin_input){
-
- reviewer_details[Enrollment_No].get_current_login()= currentDateTime();
-
-  RESPONSE3r:
-    cout << "..........................................................\n";
-                                          cout<<"Welcome   "<<reviewer_details[Enrollment_No].get_Name() << endl << endl;
-                                            cout << "what would you like to do?\n\n";
-     cout << "1. Profile Details\n";
-    cout << "2. Add assignment\n";
-    cout << "3. Assignment status of students\n";
-    cout << "4. Review iteration requests\n";
-    cout << "5. Exit\n";
-    cout << "..........................................................\n";
-
-                                         int response3;
-                                           cout << "Enter: ";
-                                           cin >>response3;
-                                       vector<Assignment> v;
-                                                v = Student_Details_map[Enrollment_No].get_assignments();
-                                        
-                                           switch (response3)
-                                            {
-                                                
-                                               case 1:
-                                                   cout << "..........................................................\n";
-                                                Student_Details_map[Enrollment_No].display_Personalinfo();
-                                                   goto RESPONSE3r;
-
-                                                   case 2:
-        {
-            cout << "..........................................................\n";
-            string assig_name, assig_content,assig_deadline;
-            string assig_addedon;
-            cout << "Enter the title of the Assignment: \n";
-            cin>> assig_name;
-            cout << "Enter the Assignment content: \n";
-            cin>>assig_content;
-              cout<<"Enter the deadline of assignment:\n";
-                 cin>>assig_deadline;
-                 cout<< "Assignment added on:\n" << assig_addedon;
-            Assignment asig2(assig_name, assig_content,assig_deadline);
-            assignment_mainside.push_back(asig2);
-            for (auto it : Student_Details_map)
-            {
-                it.second.ADD_Assignemnt(assig_name, assig_content,assig_deadline, assig_addedon);
-                Student_Details_map[it.first] = it.second;
-                
-            }
-            cout << endl;
-            
-            assig_addedon=currentDateTime();
-             
-               
-
-            cout << "Assignments added successfully!!\n" << endl;
-            goto RESPONSE3r;
-        }
-
-               case 3:
-            cout << "..........................................................\n";
-            if (Student_Details_map.size() == 0)
-        
-            {
-                for (auto it : Student_Details_map)
-                {
-                    Student student = it.second;
-                    cout << "..........................................................\n";
-                    cout << "Name of the student: \n" << student.Name << endl << endl;
-                    cout << "Assignmet Name (Status)\n" << endl;
-                    for (auto XD : student.get_assignments())
-                    {
-                        cout << XD.get_Assignment_title() << "(" << XD.get_Assignment_status() <<")"<< endl;
-                    }
-                    cout << "..........................................................\n";
-                }
-            }
-            goto RESPONSE3r;
-
-
-            case 4:
-                      for (auto XD :Student_Details_map)
-                {
-                    Student student = XD.second;
-                    cout << "..........................................................\n";
-                    cout << "Name of the student: " << student.Name << endl << endl;
-                    cout << "Assignmet Name(Status)" << endl;
-                    for (auto i : student.get_assignments())
-                    {
-                        if (i.get_Assignment_status() == "Pending")
-                        {
-                            cout << i.get_Assignment_status() << "(" << i.get_Assignment_status() <<")"<< endl;
+                                if (response4 == 1) {
+                                    cout << "..........................................................\n";
+                                    reviewer_details[Enrollment_no_input].display_Personalinfo();
+                                } else if (response4 == 2) {
+                                    cout << "..........................................................\n";
+                                    cout << "Last login: " << reviewer_details[Enrollment_no_input].get_current_login() << endl;
+                                } else if (response4 == 3) {
+                                    for (auto& it : assignment_mainside) {
+                                        cout << "..........................................................\n";
+                                        it.get_Assignment_title_status();
+                                        cout << "..........................................................\n";
+                                    }
+                                } else if (response4 == 4) {
+                                    cout << "..........................................................\n";
+                                    string assig_name, assig_content, assig_deadline;
+                                    string assig_addedon = currentDateTime();
+                                    cout << "Enter the title of the Assignment: \n";
+                                    cin.ignore();
+                                    getline(cin, assig_name);
+                                    cout << "Enter the Assignment content: \n";
+                                    getline(cin, assig_content);
+                                    cout << "Enter the deadline of assignment:\n";
+                                    getline(cin, assig_deadline);
+                                    cout << "Assignment added on:\n" << assig_addedon;
+                                    Assignment asig2(assig_name, assig_content, assig_deadline);
+                                    assignment_mainside.push_back(asig2);
+                                    for (auto& it : Student_Details_map) {
+                                        it.second.ADD_Assignemnt(assig_name, assig_content, assig_deadline, assig_addedon);
+                                        Student_Details_map[it.first] = it.second;
+                                    }
+                                    cout << "Assignments added successfully!!\n" << endl;
+                                } else if (response4 == 5) {
+                                    break;
+                                } else if (response4 == 6) {
+                                    exit(0);
+                                } else {
+                                    cout << "Invalid option. Please try again.\n";
+                                }
+                            }
+                        } else {
+                            cout << "Invalid Credentials\n";
                         }
                     }
-                    cout << "..........................................................\n";
-                     goto RESPONSE3r;  
                 }
-                   
+                break;
+            }
+            case 2: {
+                string Name;
+                string Enrollment_no;
+                string Email_id;
+                string Last_login;
+                string Whatsapp_No;
+                string DOB;
+                int Pin_input;
 
-                       case 5:
-                       goto RESPONSE3r;
+                while (true) {
+                    cout << "..........................................................\n";
+                    cout << "Let's start adding you as an IMG member!\n\n";
+                    cout << "Who are you willing to join as?\n";
+                    cout << "1. Student\n";
+                    cout << "2. Reviewer\n";
+                    cout << "3. Previous stage\n";
+                    cout << "4. Exit\n";
+                    cout << "Current login at: \n" << currentDateTime();
+                    cout << "..........................................................\n";
 
+                    int key2;
+                    cout << "enter: ";
+                    cin >> key2;
 
-                                            }
-   }
+                    if (key2 == 3) {
+                        break; // Go back to the previous stage
+                    } else if (key2 == 4) {
+                        exit(0);
+                    }
 
+                    cout << "Enter your Name: ";
+                    cin.ignore();
+                    getline(cin, Name);
+                    cout << "Enter your Enrollment number: ";
+                    getline(cin, Enrollment_no);
+                    cout << "Enter your Email address: ";
+                    getline(cin, Email_id);
+                    cout << "Enter your Whatsapp number: ";
+                    getline(cin, Whatsapp_No);
+                    cout << "Enter your DOB: ";
+                    getline(cin, DOB);
+                    cout << "Enter a PIN key: ";
+                    cin >> Pin_input;
 
-   else{
-    cout<<"incorrect pin ";
-        cout<<"1.Back to authentication\n";
-        cout<<"2.Forgot pin";
-        
-          int response4;                                   
-          cout << "Enter: ";
-         cin >>response4;
-     RESPONSE4FORREVIEWER:
-        switch (response4)
-         {
-          case 1:
-           goto AUTHENTICATIONFORREVIEWER;
+                    if (key2 == 1) {
+                        Student s(Name, Enrollment_no, Email_id, Pin_input);
+                        s.set_Whatsapp_No(Whatsapp_No);
+                        s.set_DOB(DOB);
 
-           case 2:
-           
-      string DOB_input;
-      ENTERDOBFORREVIEWER:
-     cout<<"enter DOB";
-      cin>>DOB_input;
-      if(DOB_input== reviewer_details[Enrollment_No].get_DOB()){
-       cout<<"Your pin was"<<Pin_key;
-          }
-       else{
-        cout<<"Enter correct DOB";
-        goto ENTERDOBFORREVIEWER;
-         }
-    
-    
- 
-          }
-     
-   }
+                        cout << "You have been successfully added as an IMG member!";
+                        cout << "\n\n";
 
-   }
-     case 3:
+                        Student_Details_map[Enrollment_no] = s;
+                    } else if (key2 == 2) {
+                        Reviewer r(Name, Enrollment_no, Email_id, Pin_input);
+                        r.set_Whatsapp_No(Whatsapp_No);
+                        r.set_DOB(DOB);
 
-   break;
+                        cout << "You have been successfully added as an IMG member!";
+                        cout << "\n\n";
 
-
-
-
-
-   }
-}
-
-case 2:
-{
-string name;
-         string enrollment_no ;
-          string email_id;
-          string whatsapp_No;
-          string dOB;
-          int pin_key;
-         cout << "Name: ";
-        cin >> name;
-        cout << "Enrollment Number: ";
-        cin >> enrollment_no ;
-        cout << "Enter Pin(must be 4 digit): ";
-        cin >> pin_key;
-          cout << "Email Address: ";
-        cin >> email_id;
-        cout<<"Whatsapp Number";
-        cin>>whatsapp_No;
-        cout<<"DOB in MMDDYY";
-        cin>>dOB;
-        
-        cout<<"Who would you like to add as 1 for reviewer,2 for student";
-        
-        int key1;
-        cin>>key1;
-        if(key1==1){
-            reviewer_details[enrollment_no].Name =name;
-             reviewer_details[enrollment_no].Pin_key=pin_key;
-              reviewer_details[enrollment_no].Email_id=email_id;
-               reviewer_details[enrollment_no].Whatsapp_No=whatsapp_No;
-                reviewer_details[enrollment_no].DOB=dOB;
-            
+                        reviewer_details[Enrollment_no] = r;
+                    }
+                }
+                break;
+            }
+            case 3:
+                exit(0);
         }
-        else{
-           
-            Student_Details_map[enrollment_no].Name =name;
-             Student_Details_map[enrollment_no].Pin_key=pin_key;
-             Student_Details_map[enrollment_no].Email_id=email_id;
-               Student_Details_map[enrollment_no].Whatsapp_No=whatsapp_No;
-                Student_Details_map[enrollment_no].DOB=dOB;
-    
-        }
-} 
-break;
-
-case 3:
-{
-    cout<<"Thank you";
-
-}
-}
-
-
-
-
     }
 }
 
-
-int main()
-{
-
+int main() {
     page_start();
-
+    return 0;
 }
+
